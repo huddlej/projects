@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+<script src="{{ media_url }}projects/js/projects.js"></script>
+{% endblock %}
+
+{% block content %}
+<h1>Projects</h1>
+
+<div class="yui-u first">
+<h2>Projects (<a href="#add-project" class="add-project-toggle">add</a>)</h2>
+<div id="add-project" class="hidden">
+{{ form|safe }}
+</div>
+
+<ul>
+{% for project in object_list %}
+    <li>
+        <a href="{% url projects_project project.id %}">{{ project }}</a>
+    </li>
+{% empty %}
+    <li>There aren't any projects yet.  Why not <a href="#add-project" class="add-project-toggle">create one</a>?</li>
+{% endfor %}
+</ul>
+</div>
+
+<div id="users" class="yui-u">
+<h2>Users</h2>
+
+{# TODO show unique users #}
+</div> 
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ol class="menu">
+    <li><a href="{% url projects_index %}">Projects</a></li>
+    <li class="selected">{{ object }}</li>
+</ol>
+
+<h1>{{ object }}</h1>
+
+{% if object.description %}
+    <p>{{ object.description }}</p>
+{% endif %}
+
+<h2>Milestones (<a href="#add-milestone" class="add-milestone-toggle">add</a>)</h2>
+<div id="milestone-nav">
+</div>
+
+<div id="milestone">
+    <div id="add-milestone" class="hidden">
+        <h3>Add Milestone</h3>
+
+        <form action="" method="post">
+        {{ form.as_p }}
+        <p class="submit-row"><input type="submit" class="save" value="Save" /> or 
+        <a href="#cancel-add-milestone" class="cancel-form">cancel</a></p>
+        </form>
+    </div>
+</div>
+
+{% if object.milestone_set.all %}
+    <ol>
+    {% for milestone in object.milestone_set.all %}
+        <li><a href="{% url projects_milestone milestone.id %}">{{ milestone.start_date }} to {{ milestone.end_date }}</a></li>
+    {% endfor %}
+    </ol>
+{% else %}
+    <p>There aren't any milestones for this project yet.  Why not <a href="{% url projects_milestone_add %}">create one</a>?</p>
+{% endif %}
+{% endblock %}

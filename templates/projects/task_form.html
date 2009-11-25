@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ol class="menu">
+    <li><a href="{% url projects_index %}">Projects</a></li>
+    {% if object %}
+        <li><a href="{% url projects_project object.milestone.project.id %}">{{ object.milestone.project }}</a></li>
+        <li><a href="{% url projects_project object.milestone.id %}">Milestone {{ object.milestone.end_date }}</a></li>
+        <li class="selected">{{ object }}</li>
+    {% else %}
+        <li class="selected">Add Task</li>
+    {% endif %}
+</ol>
+
+<h1>
+{% if object %}
+    {{ object }}
+{% else %}
+    Add Task
+{% endif %}
+</h1>
+
+<form action="" method="post">
+{{ form.as_p }}
+<p class="submit-row"><input type="submit" class="save" value="Save" /></p>
+</form>
+{% endblock %}

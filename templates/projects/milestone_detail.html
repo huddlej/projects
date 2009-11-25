@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ol class="menu">
+    <li><a href="{% url projects_index %}">Projects</a></li>
+    <li><a href="{% url projects_project object.project.id %}">{{ object.project }}</a></li>
+    <li class="selected">{{ object }}</li>
+</ol>
+
+<h1>{{ object }}</h1>
+
+<h2>Tasks</h2>
+{% if object.task_set.all %}
+    <ul>
+    {% for task in object.task_set.all %}
+        <li><a href="{% url projects_task task.id %}">{{ task }}</a> - {% for user in task.assigned_to.all %}{{ user.get_full_name }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>This milestone doesn't have any tasks yet.  Why not <a href="{% url projects_task_add %}">create one</a>?</p>
+{% endif %}
+{% endblock %}
