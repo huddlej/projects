@@ -2,7 +2,7 @@
 Views for Projects application.
 """
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import get_object_or_404, render_to_response
 from django.utils import simplejson
 from django.views.generic.create_update import create_object
 from django.views.generic.list_detail import object_list
@@ -47,7 +47,7 @@ def projects(request):
 
 def project_detail(request, object_id):
     """Represents interactions with a single project."""
-    project = Project.objects.get(pk=object_id)
+    project = get_object_or_404(Project, pk=object_id)
 
     if request.method == "POST":
         form = MilestoneForm(request.POST)
