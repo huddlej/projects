@@ -3,7 +3,7 @@ from django.views.generic.create_update import create_object, update_object
 from django.views.generic.list_detail import object_detail
 
 from models import Milestone, Project, Task
-from views import project_detail, projects
+from views import milestone_detail, project_detail, projects
 
 
 urlpatterns = patterns("",
@@ -16,13 +16,12 @@ urlpatterns = patterns("",
         {"model": Project},
         name="projects_project_add"),
 
-    url(r"^milestone/(?P<object_id>\d+)/$", object_detail,
-        {"queryset": Milestone.objects.all()},
+    url(r"^project/(?P<project_id>\d+)/milestone/(?P<object_id>\d+)/$",
+        milestone_detail,
         name="projects_milestone"),
 
-    url(r"^milestone/add/$", create_object,
-        {"model": Milestone},
-        name="projects_milestone_add"),
+    url(r"^project/(?P<project_id>\d+)/milestone/add/$", milestone_detail,
+        name="projects_milestone_create"),
 
     url(r"^task/(?P<object_id>\d+)/$", update_object,
         {"model": Task},

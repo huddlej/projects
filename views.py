@@ -46,19 +46,37 @@ def projects(request):
 
 
 def project_detail(request, object_id):
-    """Represents interactions with a single project."""
+    """
+    Redirects users to either the current milestone for this project or the form
+    to add a new milestone.
+    """
+    project = get_object_or_404(Project, pk=object_id)
+    current_milestone = project.current_milestone()
+
+    if current_milestone:
+        return HttpResponseRedirect(current_milestone.get_absolute_url())
+    else:
+        return HttpResponseRedirect(reverse("projects_milestone_create"))
+
+
+def milestone_detail(request, project_id, object_id=None):
     project = get_object_or_404(Project, pk=object_id)
 
+    if object_id is None:
+        form_args = {}
+    else:
+        form_args = {"instance": get_object_or_404(Milestone, pk=object_id)}
+
     if request.method == "POST":
-        form = MilestoneForm(request.POST)
+        form = MilestoneForm(request.POST, **form_args)
         if form.is_valid():
             milestone = form.save(commit=False)
             milestone.project = project
             milestone.save()
             return HttpResponseRedirect(milestone.get_absolute_url())
     else:
-        form = MilestoneForm()
+        form = MilestoneForm(**form_args)
 
     context = {"form": form,
-               "object": project}
-    return render_to_response("projects/project_detail.html", context)
+               "project": project}
+    return render_to_response("projects/milestone_form.html", context)
