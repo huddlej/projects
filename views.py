@@ -1,6 +1,7 @@
 """
 Views for Projects application.
 """
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.utils import simplejson
@@ -51,16 +52,16 @@ def project_detail(request, object_id):
     to add a new milestone.
     """
     project = get_object_or_404(Project, pk=object_id)
-    current_milestone = project.current_milestone()
+    current_milestone = project.get_current_milestone()
 
     if current_milestone:
         return HttpResponseRedirect(current_milestone.get_absolute_url())
     else:
-        return HttpResponseRedirect(reverse("projects_milestone_create"))
+        return HttpResponseRedirect(reverse("projects_milestone_create", args=(project.id,)))
 
 
 def milestone_detail(request, project_id, object_id=None):
-    project = get_object_or_404(Project, pk=object_id)
+    project = get_object_or_404(Project, pk=project_id)
 
     if object_id is None:
         form_args = {}
