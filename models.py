@@ -18,6 +18,17 @@ class Project(models.Model):
     def get_absolute_url(self):
         return ("projects_project", (self.id,))
 
+    def get_current_milestone(self):
+        today = datetime.date.today()
+        milestones = self.milestone_set.filter(
+            start_date__lte=today,
+            end_date__gte=today
+        )
+        if milestones.count() > 0:
+            return milestones[0]
+        else:
+            return None
+
 
 class Milestone(models.Model):
     """
