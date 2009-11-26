@@ -8,7 +8,7 @@ from django.utils import simplejson
 from django.views.generic.create_update import create_object
 from django.views.generic.list_detail import object_list
 
-from forms import MilestoneForm
+from forms import MilestoneForm, TasksForm
 from models import Milestone, Project
 
 
@@ -75,6 +75,7 @@ def milestone_detail(request, project_id, object_id=None):
 
     if request.method == "POST":
         form = MilestoneForm(request.POST, **form_args)
+        tasks_form = TasksForm(request.POST)
         if form.is_valid():
             milestone = form.save(commit=False)
             milestone.project = project
@@ -82,7 +83,9 @@ def milestone_detail(request, project_id, object_id=None):
             return HttpResponseRedirect(milestone.get_absolute_url())
     else:
         form = MilestoneForm(**form_args)
+        tasks_form = TasksForm()
 
     context = {"form": form,
+               "tasks_form": tasks_form,
                "project": project}
     return render_to_response("projects/milestone_form.html", context)
