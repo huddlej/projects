@@ -9,7 +9,7 @@ from django.views.generic.create_update import create_object
 from django.views.generic.list_detail import object_list
 
 from forms import MilestoneForm
-from models import Project
+from models import Milestone, Project
 
 
 class JsonResponse(HttpResponse):
