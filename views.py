@@ -57,10 +57,15 @@ def project_detail(request, object_id):
     if current_milestone:
         return HttpResponseRedirect(current_milestone.get_absolute_url())
     else:
-        return HttpResponseRedirect(reverse("projects_milestone_create", args=(project.id,)))
+        return HttpResponseRedirect(reverse("projects_milestone_create",
+                                            args=(project.id,)))
 
 
 def milestone_detail(request, project_id, object_id=None):
+    """
+    Describes a milestone for a given project or a form to create a new
+    milestone for that same project.
+    """
     project = get_object_or_404(Project, pk=project_id)
 
     if object_id is None:
