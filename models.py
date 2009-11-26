@@ -43,7 +43,7 @@ class Milestone(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ("projects_milestone", (self.id,))
+        return ("projects_milestone", (self.project.id, self.id))
 
 
 class Task(models.Model):
