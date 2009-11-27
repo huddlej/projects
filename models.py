@@ -62,7 +62,6 @@ class Task(models.Model):
     added_date = models.DateTimeField(editable=False)
     closed_date = models.DateTimeField(editable=False, null=True, blank=True)
     reported_by = models.ForeignKey(User,
-                                    editable=False,
                                     related_name="reported_tasks")
     assigned_to = models.ManyToManyField(User,
                                          limit_choices_to={"is_staff": True})
@@ -77,10 +76,9 @@ class Task(models.Model):
     def get_absolute_url(self):
         return ("projects_task", (self.id,))
 
-    def save(self, reported_by=None, *args, **kwargs):
+    def save(self, *args, **kwargs):
         if not self.id:
             self.added_date = datetime.datetime.now()
-            self.reported_by = reported_by
         
         if self.status == "closed":
             self.closed_date = datetime.datetime.now()

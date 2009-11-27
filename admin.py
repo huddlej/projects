@@ -13,7 +13,8 @@ class MilestoneAdmin(admin.ModelAdmin):
     def save_formset(self, request, form, formset, change):
         instances = formset.save(commit=False)
         for instance in instances:
-            instance.save(reported_by=request.user)
+            instance.reported_by = request.user
+            instance.save()
 
         formset.save_m2m()
 
