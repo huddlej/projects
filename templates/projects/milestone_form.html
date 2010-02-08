@@ -27,5 +27,20 @@
         <a href="#cancel-add-milestone" class="cancel-form">cancel</a></p>
         </form>
     </div>
+
+    {% if object %}
+        <div id="tasks">
+            <h2>Tasks</h2>
+            {% if object.task_set.all %}
+                <ul>
+                {% for task in object.task_set.all %}
+                    <li><a href="{% url projects_task task.id %}">{{ task }}</a> - {% for user in task.assigned_to.all %}{{ user.get_full_name }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>This milestone doesn't have any tasks yet.  Why not <a href="{% url projects_task_add %}">create one</a>?</p>
+            {% endif %}
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
