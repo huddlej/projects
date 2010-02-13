@@ -17,8 +17,8 @@
 </div>
 
 <div id="milestone">
-    <div id="add-milestone"{% if form.instance %} class="hidden"{% endif %}>
-        <h3>Add Milestone</h3>
+    <div id="add-milestone"{% if form.instance.id %} class="hidden"{% endif %}>
+        <h2>Add Milestone</h2>
 
         <form action="{% url projects_milestone_create project.id %}" method="post">
         {{ form.as_p }}
