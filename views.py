@@ -69,9 +69,11 @@ def milestone_detail(request, project_id, object_id=None):
     project = get_object_or_404(Project, pk=project_id)
 
     if object_id is None:
+        milestone = None
         form_args = {}
     else:
-        form_args = {"instance": get_object_or_404(Milestone, pk=object_id)}
+        milestone = get_object_or_404(Milestone, pk=object_id)
+        form_args = {"instance": milestone}
 
     if request.method == "POST":
         form = MilestoneForm(request.POST, **form_args)
