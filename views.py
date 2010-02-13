@@ -4,6 +4,7 @@ Views for Projects application.
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
+from django.template import RequestContext
 from django.utils import simplejson
 from django.views.generic.create_update import create_object
 from django.views.generic.list_detail import object_list
@@ -89,5 +90,7 @@ def milestone_detail(request, project_id, object_id=None):
 
     context = {"form": form,
                "tasks_form": tasks_form,
-               "project": project}
-    return render_to_response("projects/milestone_form.html", context)
+               "project": project,
+               "object": milestone}
+    return render_to_response("projects/milestone_form.html", context,
+                              context_instance=RequestContext())
