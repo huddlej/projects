@@ -44,7 +44,8 @@ def projects(request):
 
     extra_context = {"form": form_response.content}
     return object_list(request, Project.objects.all(),
-                       extra_context=extra_context)
+                       extra_context=extra_context,
+                       context_processors=["django.core.context_processors.media"])
 
 
 def project_detail(request, object_id):
