@@ -1,12 +1,12 @@
 from django import forms
 
-from models import Milestone
+from models import Task
 
 
-class MilestoneForm(forms.ModelForm):
+class TaskForm(forms.ModelForm):
     class Meta:
-        exclude = ("project",)
-        model = Milestone
+        model = Task
+        fields = ("name",)
 
 
 class TasksForm(forms.Form):
