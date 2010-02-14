@@ -19,7 +19,8 @@ class Task(models.Model):
 
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
-    priority = models.CharField(max_length=1, choices=PRIORITY_CHOICES)
+    priority = models.CharField(max_length=1, choices=PRIORITY_CHOICES,
+                                default="a")
     created_on = models.DateTimeField(editable=False)
     closed_on = models.DateTimeField(editable=False, null=True, blank=True)
     assigned_to = models.ManyToManyField(User,
