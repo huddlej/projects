@@ -1,0 +1,25 @@
+{% extends "projects/base.html" %}
+
+{% block content %}
+<h1>{{ page_title }}</h1>
+
+<h2>Your Tasks ({{ tasks.count }})</h2>
+
+<ol class="menu">
+    <li class="selected">Current</li>
+    <li>Add</li>
+    <li>Completed</li>
+</ol>
+
+<form action="" method="post">
+<p>{{ form.name }} <input type="submit" value="Add Task" /></p>
+</form>
+
+{% if tasks %}
+    <ol>
+    {% for task in tasks %}
+        <li>{{ task.name }}</li>
+    {% endfor %}
+    </ol>
+{% endif %}
+{% endblock %}
