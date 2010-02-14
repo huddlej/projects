@@ -2,6 +2,8 @@
 Views for Projects application.
 """
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
@@ -20,8 +22,8 @@ def index(request):
         task.reported_by = request.user
         task.save()
         task.assigned_to.add(request.user)
-        task.save_m2m()
-        form = TaskForm()
+        
+        return HttpResponseRedirect(reverse("projects_index"))        
     
     context = {"page_title": "Projects",
                "tasks": tasks,
