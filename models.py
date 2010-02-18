@@ -4,6 +4,18 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
+class TaskQuerySet(models.query.QuerySet):
+    def complete(self):
+        for task in self:
+            task.status = "closed"
+            task.save()
+
+
+class TaskManager(models.Manager):
+    def get_query_set(self):
+        return TaskQuerySet(self.model)        
+
+
 class Task(models.Model):
     """
     Represents a specific task to be completed for a specific milestone by one
@@ -16,6 +28,8 @@ class Task(models.Model):
                       ("closed", "Closed"),
                       ("wontfix", "Won't Fix"),
                       ("duplicate", "Duplicate"))
+
+    objects = TaskManager()
 
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
