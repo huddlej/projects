@@ -22,14 +22,18 @@ class Task(models.Model):
     priority = models.CharField(max_length=1, choices=PRIORITY_CHOICES,
                                 default="a")
     created_on = models.DateTimeField(editable=False)
-    closed_on = models.DateTimeField(editable=False, null=True, blank=True)
-    assigned_to = models.ManyToManyField(User,
-                                         limit_choices_to={"is_staff": True})
     reported_by = models.ForeignKey(User,
                                     related_name="reported_tasks")
+    assigned_to = models.ManyToManyField(User,
+                                         limit_choices_to={"is_staff": True})
     status = models.CharField(max_length=255,
                               choices=STATUS_CHOICES,
                               default="open")
+    due_date = models.DateField(null=True, blank=True)
+    closed_on = models.DateTimeField(editable=False, null=True, blank=True)
+
+    class Meta:
+        ordering = ("-priority", "due_date")
 
     def __unicode__(self):
         return self.name
