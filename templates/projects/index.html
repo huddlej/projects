@@ -16,10 +16,19 @@
 </form>
 
 {% if tasks %}
+    <form action="" method="post">
+    <p>
+        <input type="submit" name="mark_complete" value="Mark Complete" />
+        <input type="submit" name="delete" value="Delete" />
+    </p>
     <ol>
     {% for task in tasks %}
-        <li>{{ task.name }}</li>
+        <li>
+            <input type="checkbox" id="task_{{ task.id }}" name="task" value="{{ task.id }}" />
+            {% ifequal task.status "closed" %}<strike>{% endifequal %}<label for="task_{{ task.id }}">{{ task.name }}</label>{% ifequal task.status "closed" %}</strike>{% endifequal %}
+        </li>
     {% endfor %}
     </ol>
+    </form>
 {% endif %}
 {% endblock %}

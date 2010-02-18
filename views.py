@@ -15,8 +15,20 @@ from models import Task
 def index(request):
     tasks = Task.objects.all()
     post_data = request.POST or None
-    form = TaskForm(post_data)
 
+    # Handle multiple task updates (e.g. deletes, completes, etc.).
+    if post_data and "task" in post_data:
+        task_ids = post_data.getlist("task")
+        tasks = Task.objects.filter(pk__in=task_ids)
+
+        if "delete" in post_data:
+            tasks.delete()
+            return HttpResponseRedirect(reverse("projects_index"))
+        elif "mark_complete" in post_data:
+            tasks.complete()
+            return HttpResponseRedirect(reverse("projects_index"))
+
+    form = TaskForm(post_data)
     if form.is_valid():
         task = form.save(commit=False)
         task.reported_by = request.user
