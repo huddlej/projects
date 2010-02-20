@@ -66,6 +66,11 @@ class Task(models.Model):
                                  self.closed_on.day)
         return None
 
+    @property
+    def assigned_to_names(self):
+        return u", ".join([user.get_full_name()
+                           for user in self.assigned_to.all()])
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.created_on = datetime.datetime.now()
