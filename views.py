@@ -13,8 +13,12 @@ from models import Task
 
 @login_required
 def index(request):
-    tasks = Task.objects.all()
     post_data = request.POST or None
+
+    if request.GET.get("status") == "completed":
+        tasks = Task.objects.completed()
+    else:
+        tasks = Task.objects.open()
 
     # Handle multiple task updates (e.g. deletes, completes, etc.).
     if post_data and "task" in post_data:
