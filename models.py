@@ -58,6 +58,14 @@ class Task(models.Model):
     def __unicode__(self):
         return self.name
 
+    @property
+    def closed_on_date(self):
+        if self.closed_on:
+            return datetime.date(self.closed_on.year,
+                                 self.closed_on.month,
+                                 self.closed_on.day)
+        return None
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.created_on = datetime.datetime.now()
