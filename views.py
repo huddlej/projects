@@ -20,6 +20,9 @@ def index(request):
     else:
         tasks = Task.objects.open()
 
+    others_tasks = tasks.exclude(assigned_to=request.user)
+    tasks = tasks.filter(assigned_to=request.user)    
+
     # Handle multiple task updates (e.g. deletes, completes, etc.).
     if post_data and "task" in post_data:
         task_ids = post_data.getlist("task")
@@ -43,6 +46,7 @@ def index(request):
     
     context = {"page_title": "Projects",
                "tasks": tasks,
+               "others_tasks": others_tasks,
                "form": form}
     return render_to_response("projects/index.html", context,
                               context_instance=RequestContext(request))
