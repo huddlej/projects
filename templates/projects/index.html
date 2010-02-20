@@ -54,4 +54,14 @@
     {% endifequal %}
     </form>
 {% endif %}
+
+<h2>Others' Tasks ({{ others_tasks.count }})</h2>
+
+<ol>
+{% for task in others_tasks %}
+    <li>
+        {{ task.name }} - {{ task.assigned_to_names }}
+    </li>
+{% endfor %}
+</ol>
 {% endblock %}
