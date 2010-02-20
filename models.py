@@ -13,7 +13,13 @@ class TaskQuerySet(models.query.QuerySet):
 
 class TaskManager(models.Manager):
     def get_query_set(self):
-        return TaskQuerySet(self.model)        
+        return TaskQuerySet(self.model)
+
+    def completed(self):
+        return self.filter(status="closed").order_by("-closed_on")
+
+    def open(self):
+        return self.filter(status="open")
 
 
 class Task(models.Model):
