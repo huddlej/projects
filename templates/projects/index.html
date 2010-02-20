@@ -6,9 +6,17 @@
 <h2>Your Tasks ({{ tasks.count }})</h2>
 
 <ol class="menu">
-    <li class="selected">Current</li>
-    <li>Add</li>
-    <li>Completed</li>
+    {% if not request.GET.status %}
+        <li class="selected">Current</li>
+    {% else %}
+        <li><a href="?">Current</a></li>
+    {% endif %}
+
+    {% ifequal request.GET.status "completed" %}
+        <li class="selected">Completed</li>
+    {% else %}
+        <li><a href="?status=completed">Completed</a></li>
+    {% endifequal %}
 </ol>
 
 <form action="" method="post">
