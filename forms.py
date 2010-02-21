@@ -10,6 +10,9 @@ class AddTaskForm(forms.ModelForm):
 
 
 class EditTaskForm(forms.ModelForm):
+    priority = forms.ChoiceField(choices=Task.PRIORITY_CHOICES,
+                                 widget=forms.RadioSelect())
+    
     class Meta:
         model = Task
         fields = ("priority", "description")
