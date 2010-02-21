@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from forms import AddTaskForm
+from forms import AddTaskForm, EditTaskForm
 from models import Task
 
 
@@ -43,6 +43,11 @@ def index(request):
         task.assigned_to.add(request.user)
         
         return HttpResponseRedirect(reverse("projects_index"))        
+
+    for task in tasks:
+        task.form = EditTaskForm(post_data, instance=task, prefix=task.id)
+        if task.form.is_valid():
+            task = task.form.save()
     
     context = {"page_title": "Projects",
                "tasks": tasks,

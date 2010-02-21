@@ -47,7 +47,12 @@
         {% for task in tasks %}
             <li>
                 <input type="checkbox" id="task_{{ task.id }}" name="task" value="{{ task.id }}" />
-                <label for="task_{{ task.id }}">{{ task.name }}</label>
+                <a href="" class="task">{{ task.name }}</a>
+                <div class="edit-task">
+                    {{ task.form.priority }}
+                    <p>{{ task.form.description }}</p>
+                    <p><input type="submit" value="Update" /></p>
+                </div>
             </li>
         {% endfor %}
         </ol>
