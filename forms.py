@@ -9,6 +9,12 @@ class AddTaskForm(forms.ModelForm):
         fields = ("name",)
 
 
+class EditTaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ("priority", "description")
+
+
 class TasksForm(forms.Form):
     """
     Processes a text field as a list of tasks separated by line returns.
