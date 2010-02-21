@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from forms import TaskForm
+from forms import AddTaskForm
 from models import Task
 
 
@@ -35,7 +35,7 @@ def index(request):
             tasks.complete()
             return HttpResponseRedirect(reverse("projects_index"))
 
-    form = TaskForm(post_data)
+    form = AddTaskForm(post_data)
     if form.is_valid():
         task = form.save(commit=False)
         task.reported_by = request.user
