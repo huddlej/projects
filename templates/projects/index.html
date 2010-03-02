@@ -40,27 +40,32 @@
             <input type="submit" name="mark_complete" value="Mark Complete" />
             <input type="submit" name="delete" value="Delete" />
         </p>
-        <ol>
-        {% for task in tasks %}
-            <li>
-                <input type="checkbox" id="task_{{ task.id }}" name="task" value="{{ task.id }}" />
-                <a href="" class="task">{{ task.name }}</a>
-                <div class="edit-task">
-                    {{ task.form.priority }}
-                    <p>{{ task.form.description }}</p>
-                    <p>Assign to: {{ task.form.user }}</p>
-                    {% if task.assigned_to.count %}
-                        <ul>
-                        {% for user in task.assigned_to.all %}
-                            <li>{{ user.get_full_name }}</li>
-                        {% endfor %}
-                        </ul>
-                    {% endif %}
-                    <p><input type="submit" value="Update" /></p>
-                </div>
-            </li>
+
+        {% regroup tasks by priority as tasks_by_priority %}
+        {% for priority in tasks_by_priority %}
+            <h3>Priority: {{ priority.grouper }}</h3>
+            <ol>
+            {% for task in priority.list %}
+                <li>
+                    <input type="checkbox" id="task_{{ task.id }}" name="task" value="{{ task.id }}" />
+                    <a href="" class="task">{{ task.name }}</a>
+                    <div class="edit-task">
+                        {{ task.form.priority }}
+                        <p>{{ task.form.description }}</p>
+                        <p>Assign to: {{ task.form.user }}</p>
+                        {% if task.assigned_to.count %}
+                            <ul>
+                            {% for user in task.assigned_to.all %}
+                                <li>{{ user.get_full_name }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                        <p><input type="submit" value="Update" /></p>
+                    </div>
+                </li>
+            {% endfor %}
+            </ol>
         {% endfor %}
-        </ol>
     {% endifequal %}
     </form>
 {% endif %}
