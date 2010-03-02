@@ -51,6 +51,9 @@ def index(request):
 
             if task.form.cleaned_data["user"]:
                 task.assigned_to.add(task.form.cleaned_data["user"])
+
+    if request.POST:
+        return HttpResponseRedirect(reverse("projects_index"))        
     
     context = {"page_title": "Projects",
                "tasks": tasks,
