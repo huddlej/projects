@@ -28,10 +28,10 @@
     {% ifequal request.GET.status "completed" %}
         {% regroup tasks by closed_on_date as tasks_by_date %}
         {% for date in tasks_by_date %}
-            <p>{{ date.grouper|date:"F j, Y" }}</p>
+            <h3>{{ date.grouper|date:"F j, Y" }}</h3>
             <ol>
             {% for task in date.list %}
-                <li class="closed">{{ task.name }}</li>
+                <li>{{ task.name }}</li>
             {% endfor %}
             </ol>
         {% endfor %}
