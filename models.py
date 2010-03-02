@@ -53,7 +53,7 @@ class Task(models.Model):
     closed_on = models.DateTimeField(editable=False, null=True, blank=True)
 
     class Meta:
-        ordering = ("-priority", "due_date", "created_on")
+        ordering = ("priority", "due_date", "created_on")
 
     def __unicode__(self):
         return self.name
