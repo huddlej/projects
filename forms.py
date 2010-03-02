@@ -13,6 +13,8 @@ class AddTaskForm(forms.ModelForm):
 class EditTaskForm(forms.ModelForm):
     priority = forms.ChoiceField(choices=Task.PRIORITY_CHOICES,
                                  widget=forms.RadioSelect())
+    description = forms.CharField(widget=forms.Textarea(attrs={"rows": 3,
+                                                               "cols": 30}))
     user = forms.CharField(max_length=12,
                            required=False,
                            widget=forms.TextInput(attrs={"size": 9}))
