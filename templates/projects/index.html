@@ -51,6 +51,14 @@
                 <div class="edit-task">
                     {{ task.form.priority }}
                     <p>{{ task.form.description }}</p>
+                    <p>Assign to: {{ task.form.user }}</p>
+                    {% if task.assigned_to.count %}
+                        <ul>
+                        {% for user in task.assigned_to.all %}
+                            <li>{{ user.get_full_name }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
                     <p><input type="submit" value="Update" /></p>
                 </div>
             </li>

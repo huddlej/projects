@@ -48,6 +48,9 @@ def index(request):
         task.form = EditTaskForm(post_data, instance=task, prefix=task.id)
         if task.form.is_valid():
             task = task.form.save()
+
+            if task.form.cleaned_data["user"]:
+                task.assigned_to.add(task.form.cleaned_data["user"])
     
     context = {"page_title": "Projects",
                "tasks": tasks,

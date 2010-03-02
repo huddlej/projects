@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 
 from models import Task
 
@@ -12,10 +13,23 @@ class AddTaskForm(forms.ModelForm):
 class EditTaskForm(forms.ModelForm):
     priority = forms.ChoiceField(choices=Task.PRIORITY_CHOICES,
                                  widget=forms.RadioSelect())
+    user = forms.CharField(max_length=12,
+                           required=False,
+                           widget=forms.TextInput(attrs={"size": 9}))
     
     class Meta:
         model = Task
         fields = ("priority", "description")
+
+    def clean_user(self):
+        user = self.cleaned_data["user"]
+        if user:
+            try:
+                user = User.objects.get(username=self.cleaned_data["user"])
+            except User.DoesNotExist, e:
+                raise forms.ValidationError(e.message)
+
+        return user
 
 
 class TasksForm(forms.Form):
