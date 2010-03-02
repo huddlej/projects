@@ -31,10 +31,7 @@
             <p>{{ date.grouper|date:"F j, Y" }}</p>
             <ol>
             {% for task in date.list %}
-                <li>
-                    <input type="checkbox" id="task_{{ task.id }}" name="task" value="{{ task.id }}" />
-                    <label class="task closed" for="task_{{ task.id }}">{{ task.name }}</label>
-                </li>
+                <li class="closed">{{ task.name }}</li>
             {% endfor %}
             </ol>
         {% endfor %}
