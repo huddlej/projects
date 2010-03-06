@@ -45,6 +45,7 @@ def index(request):
         
         return HttpResponseRedirect(reverse("projects_index"))        
 
+    all_forms_valid = True
     for task in tasks:
         task.form = EditTaskForm(post_data, instance=task, prefix=task.id)
         if task.form.is_valid():
@@ -52,8 +53,10 @@ def index(request):
 
             if task.form.cleaned_data["user"]:
                 task.assigned_to.add(task.form.cleaned_data["user"])
+        else:
+            all_forms_valid = False
 
-    if request.POST:
+    if request.POST and all_forms_valid:
         return HttpResponseRedirect(reverse("projects_index"))        
     
     context = {"page_title": "Projects",
