@@ -18,13 +18,24 @@ class EditTaskForm(forms.ModelForm):
         widget=forms.Textarea(attrs={"rows": 3, "cols": 30}),
         required=False
     )
+    assigned_to = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all(),
+        required=False,
+        widget=forms.CheckboxSelectMultiple()
+    )
     user = forms.CharField(max_length=12,
                            required=False,
                            widget=forms.TextInput(attrs={"size": 9}))
     
     class Meta:
         model = Task
-        fields = ("priority", "description")
+        fields = ("priority", "description", "assigned_to")
+
+    def __init__(self, *args, **kwargs):
+        super(EditTaskForm, self).__init__(*args, **kwargs)
+        if self.instance and self.instance.assigned_to.count() > 0:
+            self.fields["assigned_to"].choices = [(u.id, u.get_full_name())
+                                                  for u in self.instance.assigned_to.all()]
 
     def clean_user(self):
         user = self.cleaned_data["user"]
