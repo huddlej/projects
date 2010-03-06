@@ -24,6 +24,7 @@ class EditTaskForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple()
     )
     user = forms.CharField(max_length=12,
+                           label="Assign to",
                            required=False,
                            widget=forms.TextInput(attrs={"size": 9}))
     
