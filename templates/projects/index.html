@@ -68,7 +68,7 @@ $().ready(function () {
                     <input type="checkbox" id="task_{{ task.id }}" name="task" value="{{ task.id }}" />
                     <a href="" class="task">{{ task.name }}</a>
                     <div class="edit-task">
-                        {{ task.form.priority }}
+                        <div class="inline">{{ task.form.priority }}</div>
                         <p>{{ task.form.description }}</p>
                         <p>Assign to: {{ task.form.user }}</p>
                         {{ task.form.assigned_to }}
