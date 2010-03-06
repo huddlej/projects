@@ -91,4 +91,14 @@ $().ready(function () {
     </li>
 {% endfor %}
 </ol>
+
+<h2>Unassigned Tasks ({{ unassigned_tasks.count }})</h2>
+
+<ol>
+{% for task in unassigned_tasks %}
+    <li>
+        {{ task.name }}
+    </li>
+{% endfor %}
+</ol>
 {% endblock %}

@@ -20,7 +20,8 @@ def index(request):
     else:
         tasks = Task.objects.open()
 
-    others_tasks = tasks.exclude(assigned_to=request.user)
+    unassigned_tasks = tasks.filter(assigned_to__isnull=True)
+    others_tasks = tasks.exclude(assigned_to=request.user).filter(assigned_to__isnull=False)
     tasks = tasks.filter(assigned_to=request.user)    
 
     # Handle multiple task updates (e.g. deletes, completes, etc.).
@@ -58,6 +59,7 @@ def index(request):
     context = {"page_title": "Projects",
                "tasks": tasks,
                "others_tasks": others_tasks,
+               "unassigned_tasks": unassigned_tasks,
                "form": form}
     return render_to_response("projects/index.html", context,
                               context_instance=RequestContext(request))
