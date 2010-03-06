@@ -70,8 +70,8 @@ $().ready(function () {
                     <div class="edit-task">
                         <div class="inline">{{ task.form.priority }}</div>
                         <p>{{ task.form.description }}</p>
-                        <p>Assign to: {{ task.form.user }}</p>
                         {{ task.form.assigned_to }}
+                        <p>{{ task.form.user.label_tag }}: {{ task.form.user }}</p>
                         <p><input type="submit" value="Update" /></p>
                     </div>
                 </li>
