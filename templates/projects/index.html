@@ -62,6 +62,9 @@ $().ready(function () {
             <ol>
             {% for task in priority.list %}
                 <li>
+                    {% if task.form.errors %}
+                        {{ task.form.errors }}
+                    {% endif %}
                     <input type="checkbox" id="task_{{ task.id }}" name="task" value="{{ task.id }}" />
                     <a href="" class="task">{{ task.name }}</a>
                     <div class="edit-task">
