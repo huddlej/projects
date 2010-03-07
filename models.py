@@ -13,6 +13,14 @@ class TaskQuerySet(models.query.QuerySet):
             task.status = "closed"
             task.save()
 
+    def join(self, user):
+        """
+        Adds the given user to all tasks in the queryset thereby joining them to
+        the tasks.
+        """
+        for task in self:
+            task.assigned_to.add(user)
+
 
 class TaskManager(models.Manager):
     def get_query_set(self):
