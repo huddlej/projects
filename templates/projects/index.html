@@ -56,9 +56,9 @@ $().ready(function () {
         <input type="submit" name="delete" value="Delete" />
     </p>
 
-    {% regroup tasks by priority as tasks_by_priority %}
+    {% regroup tasks by get_priority_display as tasks_by_priority %}
     {% for priority in tasks_by_priority %}
-        <h3>Priority: {{ priority.grouper }}</h3>
+        <h3>{{ priority.grouper }}</h3>
         <ol>
         {% for task in priority.list %}
             <li>
