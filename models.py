@@ -38,9 +38,9 @@ class Task(models.Model):
     Represents a specific task to be completed for a specific milestone by one
     or more people.
     """
-    PRIORITY_CHOICES = (("a", "a"),
-                        ("b", "b"),
-                        ("c", "c"))
+    PRIORITY_CHOICES = (("a", "Today"),
+                        ("b", "Maybe Later Today"),
+                        ("c", "Later"))
     STATUS_CHOICES = (("open", "Open"),
                       ("closed", "Closed"),
                       ("wontfix", "Won't Fix"),
