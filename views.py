@@ -36,6 +36,9 @@ def index(request):
         elif "mark_complete" in post_data:
             tasks.complete()
             return HttpResponseRedirect(reverse("projects_index"))
+        elif "join" in post_data:
+            tasks.join(request.user)
+            return HttpResponseRedirect(reverse("projects_index"))
 
     form = AddTaskForm(post_data)
     if form.is_valid():
