@@ -21,7 +21,8 @@ def index(request):
         tasks = Task.objects.open()
 
     unassigned_tasks = tasks.filter(assigned_to__isnull=True)
-    others_tasks = tasks.exclude(assigned_to=request.user).filter(assigned_to__isnull=False)
+    others_tasks = tasks.exclude(assigned_to=request.user)
+    others_tasks = others_tasks.filter(assigned_to__isnull=False)
     tasks = tasks.filter(assigned_to=request.user)    
 
     # Handle multiple task updates (e.g. deletes, completes, etc.).
