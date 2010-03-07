@@ -6,6 +6,9 @@ from django.db import models
 
 class TaskQuerySet(models.query.QuerySet):
     def complete(self):
+        """
+        Marks all tasks in the queryset as completed.
+        """
         for task in self:
             task.status = "closed"
             task.save()
