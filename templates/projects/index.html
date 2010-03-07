@@ -38,55 +38,54 @@ $().ready(function () {
 <p>{{ form.name }} <input type="submit" id="add-task-button" value="Add Task" /></p>
 </form>
 
-{% if tasks %}
-    <form action="" method="post">
-    {% ifequal request.GET.status "completed" %}
-        {% regroup tasks by closed_on_date as tasks_by_date %}
-        {% for date in tasks_by_date %}
-            <h3>{{ date.grouper|date:"F j, Y" }}</h3>
-            <ol>
-            {% for task in date.list %}
-                <li>{{ task.name }}</li>
-            {% endfor %}
-            </ol>
+<form action="" method="post">
+{% ifequal request.GET.status "completed" %}
+    {% regroup tasks by closed_on_date as tasks_by_date %}
+    {% for date in tasks_by_date %}
+        <h3>{{ date.grouper|date:"F j, Y" }}</h3>
+        <ol>
+        {% for task in date.list %}
+            <li>{{ task.name }}</li>
         {% endfor %}
-    {% else %}
-        <p>
-            <input type="submit" name="mark_complete" value="Mark Complete" />
-            <input type="submit" name="delete" value="Delete" />
-        </p>
+        </ol>
+    {% endfor %}
+{% else %}
+    <p>
+        <input type="submit" name="mark_complete" value="Mark Complete" />
+        <input type="submit" name="join" value="Join" />
+        <input type="submit" name="delete" value="Delete" />
+    </p>
 
-        {% regroup tasks by priority as tasks_by_priority %}
-        {% for priority in tasks_by_priority %}
-            <h3>Priority: {{ priority.grouper }}</h3>
-            <ol>
-            {% for task in priority.list %}
-                <li>
-                    {% if task.form.errors %}
-                        {{ task.form.errors }}
-                    {% endif %}
-                    <input type="checkbox" id="task_{{ task.id }}" name="task" value="{{ task.id }}" />
-                    <a href="" class="task">{{ task.name }}</a>
-                    <div class="edit-task">
-                        <div class="inline">{{ task.form.priority }}</div>
-                        <p>{{ task.form.description }}</p>
-                        {{ task.form.assigned_to }}
-                        <p>{{ task.form.user.label_tag }}: {{ task.form.user }}</p>
-                        <p><input type="submit" value="Update" /></p>
-                    </div>
-                </li>
-            {% endfor %}
-            </ol>
+    {% regroup tasks by priority as tasks_by_priority %}
+    {% for priority in tasks_by_priority %}
+        <h3>Priority: {{ priority.grouper }}</h3>
+        <ol>
+        {% for task in priority.list %}
+            <li>
+                {% if task.form.errors %}
+                    {{ task.form.errors }}
+                {% endif %}
+                <input type="checkbox" id="task_{{ task.id }}" name="task" value="{{ task.id }}" />
+                <a href="" class="task">{{ task.name }}</a>
+                <div class="edit-task">
+                    <div class="inline">{{ task.form.priority }}</div>
+                    <p>{{ task.form.description }}</p>
+                    {{ task.form.assigned_to }}
+                    <p>{{ task.form.user.label_tag }}: {{ task.form.user }}</p>
+                    <p><input type="submit" value="Update" /></p>
+                </div>
+            </li>
         {% endfor %}
-    {% endifequal %}
-    </form>
-{% endif %}
+        </ol>
+    {% endfor %}
+{% endifequal %}
 
 <h2>Others' Tasks ({{ others_tasks.count }})</h2>
 
 <ol>
 {% for task in others_tasks %}
     <li>
+        <input type="checkbox" id="task_{{ task.id }}" name="task" value="{{ task.id }}" />
         {{ task.name }} - {{ task.assigned_to_names }}
     </li>
 {% endfor %}
@@ -97,8 +96,10 @@ $().ready(function () {
 <ol>
 {% for task in unassigned_tasks %}
     <li>
+        <input type="checkbox" id="task_{{ task.id }}" name="task" value="{{ task.id }}" />
         {{ task.name }}
     </li>
 {% endfor %}
 </ol>
+</form>
 {% endblock %}
