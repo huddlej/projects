@@ -1,6 +1,7 @@
 """
 Views for Projects application.
 """
+from django.core.context_processors import media
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
@@ -45,7 +46,7 @@ def projects(request):
     extra_context = {"form": form_response.content}
     return object_list(request, Project.objects.all(),
                        extra_context=extra_context,
-                       context_processors=["django.core.context_processors.media"])
+                       context_processors=[media])
 
 
 def project_detail(request, object_id):
